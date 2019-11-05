@@ -1,20 +1,23 @@
-# docker-php-nginx-postgres-composer
-Docker Compose configuration to run PHP 7.1 with Nginx, PHP-FPM, PostgreSQL 10.1 and Composer.
+# docker-php-nginx-postgres-composer for Laravel
+Docker Compose configuration to run PHP 7.1 with Nginx, PHP-FPM, PostgreSQL 10.1, PHP-CLI and Composer.
 
 ## Overview
 
-This Docker Compose configuration lets you run easily PHP 7.1 with Nginx, PHP-FPM, PostgreSQL 10.1 and Composer.
+This Docker Compose configuration lets you run easily PHP 7.1 with Nginx, PHP-FPM, PostgreSQL 10.1, PHP-CLI and Composer.
 It exposes 4 services:
 
 * web (Nginx)
 * php (PHP 7.1 with PHP-FPM)
 * db (PostgreSQL 10.1)
+* php-cli (PHP 7.1)
 * composer
 
 The PHP image comes with the most commonly used extensions and is configured with xdebug.
 The UUID extension for PostgreSQL has been added.
-Nginx default configuration is set up for Symfony 4 (but can be easily changed) and will serve your working directory.
 Composer is run at boot time and will automatically install the vendors.
+Nginx default configuration is set up for Laravel (but can be easily changed) and will serve your working directory. 
+
+
 
 ## Install prerequisites
 
@@ -34,7 +37,7 @@ Checkout the repository or download the sources.
 
 Simply run `docker-compose up` and you are done.
 
-Nginx will be available on `localhost:80` and PostgreSQL on `localhost:5432`.
+Nginx will be available on `localhost:8001` and PostgreSQL on `localhost:54321`.
 
 ### Using Composer
 
@@ -59,6 +62,9 @@ If you want to connect to the DB from another container (from the `php` one for 
 You can execute any command on the `php` container as you would do on any docker-compose container:
 
 `docker-compose exec php php -v`
+
+### Using LARAVEL
+Set  `sudo chmod 777 storage/ -R` or different mod to save log files.  
 
 ## Change configuration
 
@@ -90,3 +96,9 @@ alias dce="docker-compose exec"
 It then becomes way faster to execute a composer command for instance:
 
 `dcr composer require --dev phpunit/phpunit`
+
+## You can use some useful commands from Makefile
+For example:
+`make docker-up`
+`make docker-down`
+etc.
